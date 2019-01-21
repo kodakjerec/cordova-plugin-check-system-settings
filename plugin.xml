@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-check-system-settings" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>cordova-plugin-check-system-settings</name>
+    <author>Chien Ko Ta</author>
+    <description>
+    Features:
+    1. chek USB Debugging
+    參照 https://github.com/dpa99c/cordova-diagnostic-plugin.git , 只加入有用到的功能
+    </description>
+    <license>MIT</license>
+    <repo>https://github.com/kodakjerec/cordova-plugin-check-system-settings.git</repo>
+    <js-module name="cordova-plugin-check-system-settings" src="www/cordova-plugin-check-system-settings.js">
+        <clobbers target="cordova.plugins.cordova-plugin-check-system-settings" />
+    </js-module>
+    <keywords>USB Debugging, cordova</keywords>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="cordova-plugin-check-system-settings" >
+                <param name="android-package" value="cordova-plugin-check-system-settings"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/CDVCheckSystemSettings.java" target-dir="src/sc/mobile/checkSystemSettings" />
+    </platform>
+
+</plugin>

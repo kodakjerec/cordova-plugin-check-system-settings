@@ -1,0 +1,17 @@
+{
+  "name": "cordova-plugin-check-system-settings",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "cordova-plugin-check-system-settings",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "USB Debugging",
+    "cordova"
+  ],
+  "author": "Chien Ko Ta",
+  "license": "MIT"
+}
