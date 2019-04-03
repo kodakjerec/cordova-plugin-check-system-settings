@@ -1,6 +1,7 @@
 package sc.mobile.checkSystemSettings;
 
-import android.os.Build;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -14,11 +15,16 @@ public class CDVCheckSystemSettings extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        switch (action) {
-            case "isADBModeEnabled":
-                callbackContext.success( isADBModeEnabled() ? 1:0 );
+        try {
+            switch (action) {
+                case "isADBModeEnabled":
+                    callbackContext.success( isADBModeEnabled() ? 1 : 0 );
+            }
+            return true;
+        } catch (Exception error) {
+            callbackContext.error( error.getMessage() );
+            return false;
         }
-        return true;
     }
 
     /*
@@ -29,7 +35,13 @@ public class CDVCheckSystemSettings extends CordovaPlugin {
         boolean result;
         int mode = 0;
         try {
-            mode = Settings.Global.getInt(cordova.getActivity().getApplicationContext().getContentResolver(), Settings.Global.ADB_ENABLED, 0);
+            ApplicationInfo appInfo = cordova.getActivity().getPackageManager().getApplicationInfo(cordova.getActivity().getPackageName(), PackageManager.GET_META_DATA);
+            if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+                // debug = Ignore USB Debugging
+                mode = 0;
+            } else {
+                mode = Settings.Global.getInt( cordova.getActivity().getApplicationContext().getContentResolver(), Settings.Global.ADB_ENABLED, 0 );
+            }
         } catch (Exception e) {
             Log.d(TAG,  e.getMessage() );
         }
